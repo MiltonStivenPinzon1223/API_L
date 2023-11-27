@@ -31,8 +31,8 @@ class UserModel{
         $query = "SELECT use_status FROM users WHERE use_id = '$id'";
         $statement = Connection::connection()->prepare($query);
         $statement->execute();
-        $result = $statement->rowCount();
-        return $result;
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result[0]['use_status'];
     }
 
 
@@ -65,8 +65,8 @@ class UserModel{
 
 
     static public function update($id,$data){
-        $pass = md5($data['use_pss']);
-        $query = "UPDATE users SET use_email='".$data['use_email']."',use_pss='".$pass."' WHERE use_id = ".$id.";";
+        $pass = md5($data['use_pass']);
+        $query = "UPDATE users SET use_email='".$data['use_email']."',use_password='".$pass."' WHERE use_id = ".$id.";";
         $statement = Connection::connection()->prepare($query);
         $statement->execute();
         $msg = array(
@@ -75,7 +75,7 @@ class UserModel{
         return $msg;
     }
 
-    static public function updateStatus($id){
+    static public function delete($id){
         $status = self::getStatus($id);
         $newStatus = ($status == 0) ? 1 : 0;
         $query = "UPDATE users SET use_status='".$newStatus."' WHERE use_id = ".$id.";";

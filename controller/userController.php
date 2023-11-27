@@ -46,7 +46,7 @@ class UserController{
                 echo json_encode($json,true);
                 return;
             case "DELETE":
-                $createUser = UserModel::updateStatus($this->_complement);
+                $createUser = UserModel::delete($this->_complement);
                 $json = array(
                     "response: "=>$createUser
                 );

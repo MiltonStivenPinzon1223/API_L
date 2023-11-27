@@ -46,9 +46,30 @@ if(count(array_filter($rutasArray))<2){
                 return;
             }
             break;
+        case 'categories':
+            switch ($method) {
+                case 'GET':
+                    $category = new CategoryController($method, $complement, 0);
+                break;
+                case 'POST':
+                    $category = new CategoryController($method, $complement, $_POST);
+                break;
+                case 'PUT':
+                    $category = new CategoryController($method, $complement, $_POST);
+                break;
+                default:
+                    $json = array(
+                        "ruta"=>"not asd"
+                    );
+                    echo json_encode($json, true);
+                    return;
+                break;
+            }
+            $category->index();
+            break;
         default:
             $json = array(
-                "ruta"=>"not asd"
+                "ruta"=>"ruta no encontrada"
             );
             echo json_encode($json,true);
             return;
