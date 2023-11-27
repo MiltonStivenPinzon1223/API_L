@@ -8,7 +8,7 @@ $inputs['raw_input'] = @file_get_contents('php://input');
 $_POST = json_decode($inputs['raw_input'], true);
 if(count(array_filter($rutasArray))<2){
     $json = array(
-        "ruta"=>"not asd"
+        "ruta"=>"not found"
     );
     echo json_encode($json,true);
     return;
@@ -40,7 +40,7 @@ if(count(array_filter($rutasArray))<2){
                 $user -> index();
             }else{
                 $json = array(
-                    "ruta"=>"not asd"
+                    "ruta"=>"not found"
                 );
                 echo json_encode($json, true);
                 return;
@@ -59,14 +59,35 @@ if(count(array_filter($rutasArray))<2){
                 break;
                 default:
                     $json = array(
-                        "ruta"=>"not asd"
+                        "ruta"=>"not found"
                     );
                     echo json_encode($json, true);
                     return;
                 break;
             }
             $category->index();
-            break;
+        break;
+        case 'clothes':
+            switch ($method) {
+                case 'GET':
+                    $clothe = new ClotheController($method, $complement, 0);
+                break;
+                case 'POST':
+                    $clothe = new ClotheController($method, $complement, $_POST);
+                break;
+                case 'PUT':
+                    $clothe = new ClotheController($method, $complement, $_POST);
+                break;
+                default:
+                    $json = array(
+                        "ruta"=>"not found"
+                    );
+                    echo json_encode($json, true);
+                    return;
+                break;
+            }
+            $clothe->index();
+        break;
         default:
             $json = array(
                 "ruta"=>"ruta no encontrada"
