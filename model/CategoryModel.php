@@ -4,12 +4,6 @@ require_once "ConDB.php";
 
 class CategoryModel {
 
-    public $category;
-
-    public function __construct($category){
-        $this->category = $category;
-    }
-
     public static function all(){
         $query = "SELECT * FROM categories";
         $statement = Connection::connection()->prepare($query);

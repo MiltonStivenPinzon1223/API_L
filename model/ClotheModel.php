@@ -4,12 +4,6 @@ require_once "ConDB.php";
 
 class ClotheModel {
 
-    public $clothe;
-
-    public function __construct($clothe){
-        $this->clothe = $clothe;
-    }
-
     public static function all(){
         $query = "SELECT * FROM clothes";
         $statement = Connection::connection()->prepare($query);
