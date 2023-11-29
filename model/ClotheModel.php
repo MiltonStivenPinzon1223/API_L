@@ -35,5 +35,13 @@ class ClotheModel {
         $message = array("clothe updated successfully");
         return $message;
     }
+
+    public static function getPrice($id){
+        $query = "SELECT clo_price FROM clothes WHERE clo_id = $id";
+        $statement = Connection::connection()->prepare($query);
+        $statement->execute();
+        $clothe = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $clothe[0]['clo_price'];
+    }
 }
 ?>

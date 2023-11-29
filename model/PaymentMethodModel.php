@@ -13,7 +13,7 @@ class PaymentMethodModel {
     }
 
     public static function find($id){
-        $query = "SELECT * FROM payment_method WHERE clo_id = $id";
+        $query = "SELECT * FROM payment_method WHERE pame_id = $id";
         $statement = Connection::connection()->prepare($query);
         $statement->execute();
         $method = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -29,7 +29,7 @@ class PaymentMethodModel {
     }
 
     public static function update($id,$data){
-        $query = "UPDATE `methods` SET `clo_name`='".$data['clo_name']."',`clo_price`='".$data['clo_price']."',`clo_stock`='".$data['clo_stock']."',`clo_details`='".$data['clo_details']."',`cat_id`='".$data['cat_id']."' WHERE clo_id = $id";
+        $query = "UPDATE `payment_method` SET `pame_method`='".$data['pame_method']."' WHERE pame_id = $id";
         $statement = Connection::connection()->prepare($query);
         $statement->execute();
         $message = array("method updated successfully");

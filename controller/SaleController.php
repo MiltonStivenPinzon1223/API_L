@@ -1,8 +1,8 @@
 <?php
 
-class PaymentMethodController{
+class SaleController{
     private $_method; //get, post, put.
-    private $_complement; //get PaymentMethod 1 o 2.
+    private $_complement; //get sale 1 o 2.
     private $_data; // datos a insertar o actualizar
 
     function __construct($method,$complement,$data){
@@ -16,30 +16,30 @@ class PaymentMethodController{
             case "GET":
                 switch($this->_complement){
                     case 0:
-                        $PaymentMethod = PaymentMethodModel::all(0);
-                        $json = $PaymentMethod;
+                        $sale = SaleModel::all(0);
+                        $json = $sale;
                         echo json_encode($json);
                         return;
                     default:
-                        $PaymentMethod = PaymentMethodModel::find($this->_complement);
-                        if ($PaymentMethod==null)
-                            $json = array("response: "=>"Payment method not found");
+                        $sale = SaleModel::find($this->_complement);
+                        if ($sale==null)
+                            $json = array("response: "=>"Sale not found");
                         else
-                            $json = $PaymentMethod;
+                            $json = $sale;
                         echo json_encode($json);
                         return;
                 }
             case "POST":
-                $createPaymentMethod = PaymentMethodModel::create($this->_data);
+                $createsale = SaleModel::create($this->_data);
                 $json = array(
-                    "response: "=>$createPaymentMethod
+                    "response: "=>$createsale
                 );
                 echo json_encode($json,true);
                 return;
             case "PUT":
-                $createPaymentMethod = PaymentMethodModel::update($this->_complement,$this->_data);
+                $createsale = SaleModel::update($this->_data);
                 $json = array(
-                    "response: "=>$createPaymentMethod
+                    "response: "=>$createsale
                 );
                 echo json_encode($json,true);
                 return;
