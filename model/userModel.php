@@ -16,8 +16,7 @@ class UserModel{
         if($cantMail==0){
             $date = date("Y-m-d");
             $status = "1";
-            $query = "INSERT INTO `users`(`use_name`, `use_email`, `use_password`, `use_datecreate`, `use_key`, `use_status`) VALUES ('".$data['use_name']."','".$data['use_email']."','".$data['use_pass']."','".$date."','".$data['use_key']."','".$status."')";
-            // return $query;
+            $query = "INSERT INTO `users`(`use_name`, `use_email`, `use_password`, `use_datecreate`, `use_key`, `use_identifier`, `use_status`) VALUES ('".$data['use_name']."','".$data['use_email']."','".$data['use_password']."','".$date."','".$data['use_key']."', '".$data['use_identifier']."','".$status."')";
             $statement = Connection::connection()->prepare($query);
             $message = $statement-> execute() ? array("ok") : Connection::connection()->errorInfo();
             $statement->closeCursor();
@@ -50,10 +49,10 @@ class UserModel{
 
     static public function login($data){
         $user = $data['use_email'];
-        $pass = md5($data['use_pass']);
+        $pass = md5($data['use_password']);
 
         if (!empty($user) && !empty($pass)){
-            $query="SELECT  use_id, use_key FROM users WHERE use_email = '$user' and use_password='$pass' and use_status='1'";
+            $query="SELECT  use_id, use_key, use_identifier FROM users WHERE use_email = '$user' and use_password='$pass' and use_status='1'";
             $statement = Connection::connection()->prepare($query);
             $statement-> execute();
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -65,7 +64,7 @@ class UserModel{
 
 
     static public function update($id,$data){
-        $pass = md5($data['use_pass']);
+        $pass = md5($data['use_password']);
         $query = "UPDATE users SET use_email='".$data['use_email']."',use_password='".$pass."' WHERE use_id = ".$id.";";
         $statement = Connection::connection()->prepare($query);
         $statement->execute();
